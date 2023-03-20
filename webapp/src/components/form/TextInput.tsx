@@ -4,12 +4,14 @@ export const TextInput = ({
   register,
   name,
   errorMessage,
+  validation
 }: {
   field_label: string;
   field_placeholder: string;
   register: any;
   name: string;
   errorMessage: string | undefined;
+  validation: {}
 }) => {
   return (
     <>
@@ -24,7 +26,7 @@ export const TextInput = ({
         bg-slate-100 shadow-md 
         focus:bg-slate-50  selection:border-solid selection:border-gray-400"
           placeholder={field_placeholder ? field_placeholder : " "}
-          {...register(name)}
+          {...register(name, validation) }
         />
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       </div>
