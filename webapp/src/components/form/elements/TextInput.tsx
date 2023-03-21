@@ -10,9 +10,10 @@ export const TextInput = ({
   field_placeholder: string;
   register: any;
   name: string;
-  errorMessage: string | undefined;
+  errorMessage: any | undefined;
   validation: {}
 }) => {
+  console.log("🚀 ~ file: TextInput.tsx:16 ~ errorMessage:", errorMessage)
   return (
     <>
       <div className="grid grid-cols-1">
