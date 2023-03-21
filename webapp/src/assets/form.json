@@ -1,0 +1,36 @@
+[
+  {
+    "_attributes": {
+      "Name": "Age",
+      "Type": "Edm.Int32",
+      "sap:unicode": "false",
+      "sap:label": "Age (Days)",
+      "sap:creatable": "false",
+      "sap:updatable": "false"
+    }
+  },
+  {
+    "_attributes": {
+      "Name": "AgeBand",
+      "Type": "Edm.String",
+      "MaxLength": "40",
+      "sap:unicode": "false",
+      "sap:label": "Age Band",
+      "sap:creatable": "false",
+      "sap:updatable": "false",
+      "sap:sortable": "false",
+      "sap:filterable": "false"
+    }
+  },
+  {
+    "_attributes": {
+      "Name": "Arbpl",
+      "Type": "Edm.String",
+      "MaxLength": "8",
+      "sap:unicode": "false",
+      "sap:label": "Work center",
+      "sap:sortable": "false",
+      "sap:filterable": "false"
+    }
+  }
+]

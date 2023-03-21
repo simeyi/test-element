@@ -1,12 +1,22 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { NumericInput } from "./form/NumericInput";
-import { TextInput } from "./form/TextInput";
-import { MaxLengthMessage, RequiredMessage } from "./form/ValidationMessages";
+import formJSON from "../assets/form.json";
+import { Element } from "./form/Element";
 
 type FormData = {
   firstName: string;
   age: number;
   lastName: string;
+};
+
+type Field = {
+  field_type: string;
+  field_label: string;
+  field_placeholder: string;
+  register: any;
+  name: string;
+  errorMessage: string | undefined;
+  validation: {};
 };
 
 export const Form = () => {
@@ -15,16 +25,58 @@ export const Form = () => {
   
     lastName: z.string().min(4).max(12),
   }); */
+  const [elements, setElements] = useState<any>();
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>();
-
+  } = useForm<any>();
+  
   const onSubmit = (data: FormData) => {
     console.log(data);
   };
+  
+  useEffect(() => {
+    setElements(formJSON);
+  }, []);
+  //console.log("🚀 ~ file: Form.tsx:38 ~ Form ~ elements:", elements);
+  
+  console.log("🚀 ~ file: Form.tsx:35 ~ Form ~ errors:", errors)
+  const fields = elements?.map((field: any, i: number) => {
+    const validation = {
+      required: false,
+      maxLength: {
+        value: Number.parseInt(field._attributes?.MaxLength),
+        message: "MaxLength", // JS only: <p>error message</p> TS only support string
+      },
+ /*      minLength: {
+        value: 1,
+        message: "minLength", // JS only: <p>error message</p> TS only support string
+      },
+      max: {
+        value: 3,
+        message: "max", // JS only: <p>error message</p> TS only support string
+      },
+      min: {
+        value: 3,
+        message: "min", // JS only: <p>error message</p> TS only support string
+      }, */
+      valueAsNumber: field._attributes.Type === "Edm.Int32" ? true : false,
+    };
+    return {
+      field_label: field._attributes["sap:label"],
+      field_placeholder: field._attributes.Name,
+      field_type: field._attributes.Type,
+      name: field._attributes.Name,
+      register: register,
+      validation: {...validation},
+      errorMessage:errors[field._attributes.Name]?.message,
+    };
+  });
+  //console.log("🚀 ~ file: Form.tsx:38 ~ Form ~ fields:", fields);
+
   return (
     <>
       <div>
@@ -32,38 +84,14 @@ export const Form = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="grid grid-cols-1 gap-3"
         >
-          <TextInput
-            field_label="First Name"
-            field_placeholder=""
-            name="firstName"
-            register={register}
-            validation={{
-              required: RequiredMessage,
-              maxLength: {
-                value: 20,
-                message: MaxLengthMessage('20'),
-              },
-            }}
-            errorMessage={errors.firstName?.message}
-          />
-          <NumericInput
-            field_label="Age"
-            field_placeholder=""
-            name="age"
-            register={register}
-            errorMessage={errors.age?.message}
-            validation={{
-              max: { value: 25, message: "must be within 0 - 25" },
-            }}
-          />
-          <TextInput
-            field_label="Last Name"
-            field_placeholder=""
-            name="lastName"
-            register={register}
-            validation={{ required: false }}
-            errorMessage={errors.lastName?.message}
-          />
+          {fields
+            ? fields.map((input: Field, i: number) => (
+                <div key={i}>
+                  <Element {...input} />
+                  <p></p>
+                </div>
+              ))
+            : null}
           <button className="w-fit border-black border-2 rounded-md p-2 bg-teal-200 block hover:bg-teal-400">
             Submit Data
           </button>
