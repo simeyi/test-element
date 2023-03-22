@@ -52,7 +52,7 @@ export const Form = () => {
       },
       maxLength: {
         value: Number.parseInt(field._attributes?.MaxLength),
-        message: "Max Length", // JS only: <p>error message</p> TS only support string
+        message: "Max Length = " + field._attributes?.MaxLength, // JS only: <p>error message</p> TS only support string
       },
  /*      minLength: {
         value: 1,
