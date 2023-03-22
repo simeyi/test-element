@@ -48,7 +48,7 @@ export const Form = () => {
     const validation = {
       required: {
         value: field._attributes?.Nullable,
-        message: "required"
+        message: "This is mandatory field"
       },
       maxLength: {
         value: Number.parseInt(field._attributes?.MaxLength),
