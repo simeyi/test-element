@@ -3,6 +3,7 @@
     "_attributes": {
       "Name": "Age",
       "Type": "Edm.Int32",
+      "Nullable": "false",
       "sap:unicode": "false",
       "sap:label": "Age (Days)",
       "sap:creatable": "false",

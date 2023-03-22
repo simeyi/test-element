@@ -46,10 +46,13 @@ export const Form = () => {
   console.log("🚀 ~ file: Form.tsx:35 ~ Form ~ errors:", errors)
   const fields = elements?.map((field: any, i: number) => {
     const validation = {
-      required: false,
+      required: {
+        value: field._attributes?.Nullable,
+        message: "required"
+      },
       maxLength: {
         value: Number.parseInt(field._attributes?.MaxLength),
-        message: "MaxLength", // JS only: <p>error message</p> TS only support string
+        message: "Max Length", // JS only: <p>error message</p> TS only support string
       },
  /*      minLength: {
         value: 1,
